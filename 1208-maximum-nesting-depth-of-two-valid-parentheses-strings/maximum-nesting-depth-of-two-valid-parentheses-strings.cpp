@@ -1,21 +1,23 @@
 class Solution {
 public:
     vector<int> maxDepthAfterSplit(string seq) {
-        vector<int> ans(seq.size());
-
-        int depth = 0;
-
-        for (int i = 0; i < seq.size(); i++) {
-            if (seq[i] == '(') {
-                ans[i] = depth % 2;
-                depth++;
-            } 
-            else {
-                depth--;
-                ans[i] = depth % 2;
+        stack<char> st;
+        vector<int> ans(seq.size(),0);
+        for(int i=0;i<seq.size();i++){
+            if(seq[i] == '('){
+                if(st.size()%2 != 0){
+                    ans[i] = 1;
+                }
+                st.push('(');
+            }
+            else if(seq[i] == ')' && st.empty() == false){
+                st.pop();
+                if(st.size()%2 != 0){
+                    ans[i] = 1;
+                }
             }
         }
-
         return ans;
+
     }
 };
